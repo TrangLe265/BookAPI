@@ -40,6 +40,16 @@ public class Book {
         this.category = category;
     }
 
+    //a constructor without the category parameter
+    public Book(String isbn, String title, String author, int publicationYear, float price) {
+        super();
+        this.isbn = isbn;
+        this.title = title;
+        this.author = author;
+        this.publicationYear = publicationYear;
+        this.price = price;
+    }
+
     public Long getId() {
         return id;
     }
