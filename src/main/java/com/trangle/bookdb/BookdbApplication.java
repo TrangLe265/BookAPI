@@ -50,7 +50,7 @@ public class BookdbApplication implements CommandLineRunner {
 		bookRepository.save(new Book("978-0-12-345678-9", "1984", "George Orwell", 1949, 328, categoryRepository.findByCategoryName("Fiction").get(0)));
 		bookRepository.save(new Book("978-9-87-654321-0", "Pride and Prejudice", "Jane Austen", 1813, 279, categoryRepository.findByCategoryName("Romance").get(0)));
 		bookRepository.save(new Book("978-8-76-543210-1", "Mastering the Art of French Cooking", "Julia Child", 1961, 726, categoryRepository.findByCategoryName("Cooking").get(0)));
-		bookRepository.save(new Book("978-7-65-432109-8", "The Great Gatsby", "F. Scott Fitzgerald", 1925, 180 ));
+	
 
 		for (Book book : bookRepository.findAll()) {
 			logger.info(book.toString());
