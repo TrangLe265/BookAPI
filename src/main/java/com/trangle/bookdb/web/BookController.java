@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.trangle.bookdb.domain.Book;
 import com.trangle.bookdb.domain.Category;
 import com.trangle.bookdb.domain.BookRepository;
+import com.trangle.bookdb.domain.BookRequest;
 import com.trangle.bookdb.domain.CategoryRepository;
 
 import java.util.List;
@@ -56,6 +57,7 @@ public class BookController {
         return bookRepository.findAll();
     }
 
+    //endpoint to get books by title
     @GetMapping("/books/title/{title}")
     public @ResponseBody ResponseEntity<List<Book>> getBooksByTitle(@PathVariable("title") String title) {
         System.out.println("Received title: " + title);
@@ -69,11 +71,24 @@ public class BookController {
         return ResponseEntity.ok(books); 
     }
 
-    /*endpoint to add new book
+    //endpoint to add new book
+    //we use a Data Transfer Object called BookRequest to handle adding category 
     @PostMapping("/books")
-    public @ResponseBody Book addNewBook(@RequestBody Book bookDetails) {
-        return bookRepository.save(bookDetails); 
-    }*/
+    public @ResponseBody ResponseEntity<Book> addNewBook(@RequestBody BookRequest bookRequest) {
+        Category category = categoryRepository.findById(bookRequest.getCategoryId()).orElseThrow(()-> new ResourceNotFoundException("Category not found with id: " + bookRequest.getCategoryId() ));
+
+        Book book = new Book(
+            bookRequest.getIsbn(),
+            bookRequest.getTitle(),
+            bookRequest.getAuthor(),
+            bookRequest.getPublicationYear(),
+            bookRequest.getPrice(),
+            category
+        );
+    
+        Book savedBook = bookRepository.save(book);
+        return ResponseEntity.ok(savedBook);
+    }
     
 
     @PutMapping("/books/edit/{id}")
