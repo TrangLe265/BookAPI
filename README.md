@@ -43,7 +43,7 @@ Fetches a list of all books in the database.
 ```
 
 
-### 2. Get Book by Title: `GET /books/title/{title}`
+### 2a. Get Book by Title: `GET /books/title/{title}`
 Fetches a book by its title.
 
 **Path Parameter:** `title` - The title of the book you want to fetch, connect each word by `%20`
@@ -65,6 +65,26 @@ Fetches a book by its title.
     }
 }
 ```
+#### 2b. Get Book by Publicaion Year: `GET /books/publicationYear/{publicationYear}`
+Fetches books by a given publication year.
+
+**Path Parameter:** `publicationYear` 
+
+**Example Request:** http://localhost:8080/api/books/publicationYear/1984
+
+#### 2c. Get Book by Authur: `GET /books/author/{author}`
+Fetches books by a given author.
+
+**Path Parameter:** `author` 
+
+**Example Request:** http://localhost:8080/api/books/author/Jane%20Austen
+
+#### 2d. Get Book by category: `GET /books/cat/{categoryName}`
+Fetches books by a given category.
+
+**Path Parameter:** `categoryName` 
+
+**Example Request:** http://localhost:8080/api/books/cat/Fiction
 
 ### 3. Add a New Book: `POST /books`
 Adds a new book to the database.
