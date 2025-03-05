@@ -5,7 +5,7 @@ This API allows you to manage a collection of books in a database. You can perfo
 ## Base URL
 http://localhost:8080/api
 
-## Endpoints
+## Endpoints for Books
 
 ### 1. Get All Books: `GET /books`
 Fetches a list of all books in the database.
@@ -65,21 +65,21 @@ Fetches a book by its title.
     }
 }
 ```
-#### 2b. Get Book by Publicaion Year: `GET /books/publicationYear/{publicationYear}`
+### 2b. Get Book by Publicaion Year: `GET /books/publicationYear/{publicationYear}`
 Fetches books by a given publication year.
 
 **Path Parameter:** `publicationYear` 
 
 **Example Request:** http://localhost:8080/api/books/publicationYear/1984
 
-#### 2c. Get Book by Authur: `GET /books/author/{author}`
+### 2c. Get Book by Authur: `GET /books/author/{author}`
 Fetches books by a given author.
 
 **Path Parameter:** `author` 
 
 **Example Request:** http://localhost:8080/api/books/author/Jane%20Austen
 
-#### 2d. Get Book by category: `GET /books/cat/{categoryName}`
+### 2d. Get Book by category: `GET /books/cat/{categoryName}`
 Fetches books by a given category.
 
 **Path Parameter:** `categoryName` 
@@ -136,3 +136,54 @@ Deletes a book from the database.
 }
 ```
 
+## Endpoints for Categories
+
+### 1. Get All Categories: `GET /categories`
+Fetches a list of all categories in the database.
+
+**Example Request:** http://localhost:8080/api/categories
+**Example Response:** 
+```json
+{
+        "categoryId": 1,
+        "categoryName": "Fiction",
+        "books": [
+            {
+                "id": 1,
+                "isbn": "978-3-16-148410-0",
+                "title": "a",
+                "author": "Harper Lee",
+                "publicationYear": 1960,
+                "price": 281.0
+            },
+            {
+                "id": 6,
+                "isbn": "test",
+                "title": "test",
+                "author": "Jane Austen",
+                "publicationYear": 2000,
+                "price": 26.5
+            }
+        ]
+    }
+```
+### 2.Add Category: `POST /categories`
+Adds a new category to the database.
+
+**Request Body Example:**
+```json
+{
+    "categoryName": "Comedy"
+}
+```
+**Example Request:** POST http://localhost:8080/api/categories
+
+### 3.Delete Category: `Delete delete/categories/{categoryId}`
+**Path Parameter:** `categoryId` - The ID of the category you want to delete.
+**Example Request:** POST http://localhost:8080/api/categories/delete/1
+**Request Body Example:**
+```json
+{
+     "message": "Category 1 has been deleted."
+}
+```
