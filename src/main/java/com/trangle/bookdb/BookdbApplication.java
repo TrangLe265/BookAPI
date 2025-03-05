@@ -13,7 +13,6 @@ import com.trangle.bookdb.domain.CategoryRepository;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication// a combination of EnableConfiguration, ComponentScan, Configuration
 public class BookdbApplication implements CommandLineRunner {

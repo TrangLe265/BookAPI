@@ -12,6 +12,9 @@ public interface BookRepository extends CrudRepository<Book, Long> {
 
     //All manually defined methods in Repo is not considered as Spring Data Rest, therefore even if spring.data.rest.base-path=/api is defined in application.properties, /api path does not applied for manually defined method --> this can be overriden if @RequestMapping("/api") is defined again in the Controller, above all leveles of endpoints
     List<Book> findByTitle(String title);
+    List<Book> findByPublicationYear(int publicationYear);
+    List<Book> findByAuthor(String author); 
+    List<Book> findByCategory(Category category);
 
     //with larger data set, use PagingAndSortingRepository interface        
 }

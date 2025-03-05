@@ -58,7 +58,7 @@ public class Category {
     @Override
 	public String toString() {
 		return "Category [catId=" + categoryId + ", catName=" + categoryName + "]";
-	}
+    }
 
  
 }

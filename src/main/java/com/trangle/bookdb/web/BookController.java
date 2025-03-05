@@ -9,7 +9,6 @@ import com.trangle.bookdb.domain.BookRequest;
 import com.trangle.bookdb.domain.CategoryRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -70,6 +69,51 @@ public class BookController {
         
         return ResponseEntity.ok(books); 
     }
+
+    //endpoint to get book by publicationYear
+    @GetMapping("/books/publicationYear/{publicationYear}")
+    public @ResponseBody ResponseEntity<List<Book>> getBooksByYear(@PathVariable("publicationYear") int publicationYear) {
+        System.out.println("Received title: " + publicationYear);
+
+        List<Book> books = bookRepository.findByPublicationYear(publicationYear);
+
+        if (books.isEmpty()){
+            throw new ResourceNotFoundException("No book found with the publication year: " + publicationYear); 
+        }
+        
+        return ResponseEntity.ok(books); 
+    }
+
+    //endpoint to get book by author
+    @GetMapping("/books/author/{author}")
+    public @ResponseBody ResponseEntity<List<Book>> getBooksByAuthor(@PathVariable("author") String author) {
+        System.out.println("Received author: " + author);
+
+        List<Book> books = bookRepository.findByAuthor(author);
+
+        if (books.isEmpty()){
+            throw new ResourceNotFoundException("No book found with the publication year: " + author); 
+        }
+        
+        return ResponseEntity.ok(books); 
+    }
+
+    //endpoint to get book by category
+    @GetMapping("/books/cat/{categoryName}")
+    public @ResponseBody ResponseEntity<List<Book>> getBooksByCategory(@PathVariable("categoryName") String categoryName) {
+
+        Category category = categoryRepository.findByCategoryName(categoryName);
+
+        List<Book> books = bookRepository.findByCategory(category);
+
+        if (books.isEmpty()){
+            throw new ResourceNotFoundException("No book found in the category: " + categoryName); 
+        }
+        
+        return ResponseEntity.ok(books); 
+    }
+
+
 
     //endpoint to add new book
     //we use a Data Transfer Object called BookRequest to handle adding category 
