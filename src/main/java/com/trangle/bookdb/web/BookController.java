@@ -75,7 +75,8 @@ public class BookController {
     //we use a Data Transfer Object called BookRequest to handle adding category 
     @PostMapping("/books")
     public @ResponseBody ResponseEntity<Book> addNewBook(@RequestBody BookRequest bookRequest) {
-        Category category = categoryRepository.findById(bookRequest.getCategoryId()).orElseThrow(()-> new ResourceNotFoundException("Category not found with id: " + bookRequest.getCategoryId() ));
+        Category category = categoryRepository.findById(bookRequest.getCategoryId()).
+                            orElseThrow(()-> new ResourceNotFoundException("Category not found with id: " + bookRequest.getCategoryId() ));
 
         Book book = new Book(
             bookRequest.getIsbn(),
@@ -90,20 +91,20 @@ public class BookController {
         return ResponseEntity.ok(savedBook);
     }
     
-
+    //endpoint for edit existing book
     @PutMapping("/books/edit/{id}")
-    public @ResponseBody ResponseEntity<Book> updateBook(@PathVariable Long id, @RequestBody Book book) {
-        Book existingBook = bookRepository.findById(id).orElseThrow();
+    public @ResponseBody ResponseEntity<Book> updateBook(@PathVariable Long id, @RequestBody BookRequest bookRequest) {
+        Book existingBook = bookRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Book not found"));
 
-        existingBook.setIsbn(book.getIsbn());
-        existingBook.setTitle(book.getTitle());
-        existingBook.setAuthor(book.getAuthor());      
-        existingBook.setPublicationYear(book.getPublicationYear());
-        existingBook.setPrice(book.getPrice());
+        Category category = categoryRepository.findById(bookRequest.getCategoryId())
+            .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
 
-        Category category = categoryRepository.findById(book.getCategory().getCategoryId())
-            .orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + book.getCategory().getCategoryId()));
-        
+        existingBook.setIsbn(bookRequest.getIsbn());
+        existingBook.setTitle(bookRequest.getTitle());
+        existingBook.setAuthor(bookRequest.getAuthor());      
+        existingBook.setPublicationYear(bookRequest.getPublicationYear());
+        existingBook.setPrice(bookRequest.getPrice());
         existingBook.setCategory(category);
 
         bookRepository.save(existingBook); 
