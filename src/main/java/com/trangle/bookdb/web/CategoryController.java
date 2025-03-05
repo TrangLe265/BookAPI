@@ -55,7 +55,7 @@ public class CategoryController {
         return ResponseEntity.ok(savedCategory);
     }
 
-    @DeleteMapping("/categories/{categoryId}")
+    @DeleteMapping("/categories/delete/{categoryId}")
     public @ResponseBody ResponseEntity<Object> deleteCategory(@PathVariable Long categoryId){
         
         Optional<Category> categoryToDelete = categoryRepository.findById(categoryId);
