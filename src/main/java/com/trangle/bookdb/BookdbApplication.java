@@ -49,7 +49,7 @@ public class BookdbApplication implements CommandLineRunner {
 		categoryRepository.save(cooking);
 		categoryRepository.save(romance);
 		
-		bookRepository.save(new Book("978-3-16-148410-0", "To Kill a Mockingbird", "Harper Lee", 1960, 281,fiction));
+		bookRepository.save(new Book("978-3-16-148410-0", "a", "Harper Lee", 1960, 281,fiction));
 		bookRepository.save(new Book("978-1-23-456789-7", "A Brief History of Time", "Stephen Hawking", 1988, 212, education));
 		bookRepository.save(new Book("978-0-12-345678-9", "1984", "George Orwell", 1949, 328, romance));
 		bookRepository.save(new Book("978-9-87-654321-0", "Pride and Prejudice", "Jane Austen", 1813, 279, romance));
