@@ -9,10 +9,12 @@ import com.trangle.bookdb.domain.BookRequest;
 import com.trangle.bookdb.domain.CategoryRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -113,8 +115,6 @@ public class BookController {
         return ResponseEntity.ok(books); 
     }
 
-
-
     //endpoint to add new book
     //we use a Data Transfer Object called BookRequest to handle adding category 
     @PostMapping("/books")
@@ -154,5 +154,17 @@ public class BookController {
         bookRepository.save(existingBook); 
 
         return ResponseEntity.ok(existingBook);
+    }
+
+    @DeleteMapping("/books/delete/{id}")
+    public @ResponseBody ResponseEntity<Object> deleteBook(@PathVariable Long id){
+        Optional<Book> bookToDelete = bookRepository.findById(id); 
+        
+        if (!bookToDelete.isPresent()){
+            throw new ResourceNotFoundException("No book found with id: " + id);
+        }
+
+        bookRepository.delete(bookToDelete.get());
+        return ResponseEntity.ok().body("{\"message\": \"Book with ID " + id + " has been deleted.\"}");
     }
 }
