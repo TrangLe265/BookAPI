@@ -10,25 +10,27 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity 
 public class Book {
+
     @Id 
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id; 
-
     private String isbn;    
     private String title; 
     private String author;
     private int publicationYear;
     private float price; 
+    @JsonIgnore()
     @ManyToOne
-    @JsonIgnore
+    @JoinColumn(name="categoryId")
     private Category category; 
 
-    public Book() {
-    }
+
+    public Book() {}
 
     public Book(String isbn, String title, String author, int publicationYear, float price, Category category) {
         super();
@@ -40,15 +42,6 @@ public class Book {
         this.category = category;
     }
 
-    //a constructor without the category parameter
-    public Book(String isbn, String title, String author, int publicationYear, float price) {
-        super();
-        this.isbn = isbn;
-        this.title = title;
-        this.author = author;
-        this.publicationYear = publicationYear;
-        this.price = price;
-    }
 
     public Long getId() {
         return id;

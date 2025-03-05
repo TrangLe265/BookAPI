@@ -7,12 +7,16 @@ import com.trangle.bookdb.domain.Category;
 import com.trangle.bookdb.domain.BookRepository;
 import com.trangle.bookdb.domain.CategoryRepository;
 
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
 
 
 @RestController
@@ -32,12 +36,25 @@ public class BookController {
 	}
 
     @GetMapping("/books")
-    public Iterable<Book> getBooks() {
+    public @ResponseBody Iterable<Book> getBooks() {
         return bookRepository.findAll();
     }
 
-    @PutMapping("/books/{id}")
-    public ResponseEntity<Book> updateBook(@PathVariable Long id, @RequestBody Book book) {
+    @GetMapping("/books/{title}")
+    public @ResponseBody Book getBookByName(@PathVariable("title") String title) {
+        return bookRepository.findByTitle(title);
+    }
+    
+
+    //endpoint to add new book
+    @PostMapping("/books")
+    public @ResponseBody Book addNewBook(@RequestBody Book bookDetails) {
+        return bookRepository.save(bookDetails); 
+    }
+    
+
+    @PutMapping("/books/edit/{id}")
+    public @ResponseBody ResponseEntity<Book> updateBook(@PathVariable Long id, @RequestBody Book book) {
         Book existingBook = bookRepository.findById(id).orElseThrow();
 
         existingBook.setIsbn(book.getIsbn());

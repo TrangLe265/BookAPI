@@ -40,16 +40,20 @@ public class BookdbApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		logger.info("Application running");
 
-		categoryRepository.save(new Category("Fiction"));
-		categoryRepository.save(new Category("Education"));
-		categoryRepository.save(new Category("Romance"));
-		categoryRepository.save(new Category("Cooking"));
-
-		bookRepository.save(new Book("978-3-16-148410-0", "To Kill a Mockingbird", "Harper Lee", 1960, 281, categoryRepository.findByCategoryName("Fiction").get(0)));
-		bookRepository.save(new Book("978-1-23-456789-7", "A Brief History of Time", "Stephen Hawking", 1988, 212, categoryRepository.findByCategoryName("Education").get(0)));
-		bookRepository.save(new Book("978-0-12-345678-9", "1984", "George Orwell", 1949, 328, categoryRepository.findByCategoryName("Fiction").get(0)));
-		bookRepository.save(new Book("978-9-87-654321-0", "Pride and Prejudice", "Jane Austen", 1813, 279, categoryRepository.findByCategoryName("Romance").get(0)));
-		bookRepository.save(new Book("978-8-76-543210-1", "Mastering the Art of French Cooking", "Julia Child", 1961, 726, categoryRepository.findByCategoryName("Cooking").get(0)));
+		Category fiction = new Category("Fiction"); 
+		Category education = new Category("Education"); 
+		Category romance = new Category("Romance"); 
+		Category cooking = new Category("Cooking"); 
+		categoryRepository.save(fiction);
+		categoryRepository.save(education);
+		categoryRepository.save(cooking);
+		categoryRepository.save(romance);
+		
+		bookRepository.save(new Book("978-3-16-148410-0", "To Kill a Mockingbird", "Harper Lee", 1960, 281,fiction));
+		bookRepository.save(new Book("978-1-23-456789-7", "A Brief History of Time", "Stephen Hawking", 1988, 212, education));
+		bookRepository.save(new Book("978-0-12-345678-9", "1984", "George Orwell", 1949, 328, romance));
+		bookRepository.save(new Book("978-9-87-654321-0", "Pride and Prejudice", "Jane Austen", 1813, 279, romance));
+		bookRepository.save(new Book("978-8-76-543210-1", "Mastering the Art of French Cooking", "Julia Child", 1961, 726, cooking));
 	
 
 		for (Book book : bookRepository.findAll()) {
