@@ -10,7 +10,7 @@
     <h1>Add Book</h1>
     <div class="container">
         <div class="col-md-4">
-            <form th:object="${book}" th:action="@{save}" action="#" method="post">
+            <form th:object="${bookRequest}" th:action="@{/save}" method="post">
                 <label for="isbn">ISBN</label>
                 <input type="text" id="isbn" th:field="*{isbn}" class="form-control"/>
                 <div style="clear: both; display: block; height: 10px;"></div>
@@ -24,20 +24,23 @@
                 <div style="clear: both; display: block; height: 10px;"></div>
 
                 <label for="publicationYear">Publication Year</label>
-                <input type="text" id="publicationYear" th:field="*{publicationYear}" class="form-control"/>
+                <input type="number" id="publicationYear" th:field="*{publicationYear}" class="form-control"/>
                 <div style="clear: both; display: block; height: 10px;"></div>
 
                 <label for="price">Price</label>
-                <input type="text" id="price" th:field="*{price}" class="form-control"/>
+                <input type="number" id="price" th:field="*{price}" class="form-control"/>
                 <div style="clear: both; display: block; height: 10px;"></div>
 
                 <label for="category">Category</label>
                 <select id="category" th:field="*{category}" class="form-control">
-                    <option th:each="category: ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+                    <option th:each="category : ${categories}" 
+                            th:value="${category.categoryId}" 
+                            th:text="${category.categoryName}">
+                    </option>
                 </select>
-                <div style="clear: both; display: block; height: 10px;"></div>
 
-                <input type="submit" class="btn btn-primary" value="Save"></input>
+
+                <button type="submit" class="btn btn-primary">Save</button>
             </form>
         </div>
     </div>

@@ -7,24 +7,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.trangle.bookdb.domain.Book;
 import com.trangle.bookdb.domain.BookRepository;
+import com.trangle.bookdb.domain.BookRequest;
+import com.trangle.bookdb.domain.Category;
 import com.trangle.bookdb.domain.CategoryRepository;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-
-
 
 @Controller
 public class ViewController {
 
     @Autowired
-    private final BookRepository bookRepository;
+    private BookRepository bookRepository;
     @Autowired
-    private final CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository;
 
     public ViewController(BookRepository bookRepository, CategoryRepository categoryRepository){
         this.bookRepository = bookRepository;
@@ -51,19 +48,30 @@ public class ViewController {
 
     @RequestMapping(value="/add", method=RequestMethod.GET)
     public String addBook(Model model) {
-        model.addAttribute("book", new Book());
-        model.addAttribute("category", categoryRepository.findAll());
+        model.addAttribute("bookRequest", new BookRequest()); 
+        model.addAttribute("categories", categoryRepository.findAll());
         return "addbook";
     }
 
     @RequestMapping(value="/save", method=RequestMethod.POST)
-    public String saveBook(Book book){
-        bookRepository.save(book); 
-        return "redirect:../booklists"; 
-    }
-    
-    
-    
-    
+    public String saveBook(@ModelAttribute("bookRequest") BookRequest bookRequest){
+        Book book = new Book();
+    book.setIsbn(bookRequest.getIsbn());
+    book.setTitle(bookRequest.getTitle());
+    book.setAuthor(bookRequest.getAuthor());
+    book.setPublicationYear(bookRequest.getPublicationYear());
+    book.setPrice(bookRequest.getPrice());
 
+    // Fetch the Category entity and set it
+    Category category = categoryRepository.findById(bookRequest.getCategoryId())
+            .orElseThrow(() -> new RuntimeException("Category not found"));
+    book.setCategory(category);
+
+    // Save the book entity
+    bookRepository.save(book);
+
+    return "redirect:/books";
+
+    } 
+    
 }
