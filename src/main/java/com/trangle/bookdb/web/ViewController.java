@@ -70,7 +70,7 @@ public class ViewController {
     // Save the book entity
     bookRepository.save(book);
 
-    return "redirect:/books";
+    return "redirect:/booklists";
 
     } 
     
