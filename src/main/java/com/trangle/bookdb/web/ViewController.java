@@ -28,10 +28,10 @@ public class ViewController {
         this.categoryRepository = categoryRepository; 
     }
 
-    @RequestMapping(value="/login")
+   @RequestMapping(value="/login")
     public String login() {	
         return "login";
-    }	
+    }
 	
     @RequestMapping(value="/booklists")
     public String bookLists(Model model) {
