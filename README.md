@@ -1,9 +1,21 @@
 # Book Database API Documentation
 
-This API allows you to manage a collection of books in a database. You can perform CRUD (Create, Read, Update, Delete) operations on books, as well as manage book categories.
+This API allows you to manage a collection of books in a database. You can perform CRUD (Create, Read, Update, Delete) operations on books, as well as manage book categories. It is secured by JWT. APIs can be tested on Postman, using the following credentials(username-password): user-user OR admin-admin.
 
 ## Base URL
 http://localhost:8080/api
+
+## Get JWT
+#### To secure the token, on Postman, first navigate to: http://localhost:8080/login, method Post.
+Include the following in Body: 
+```json
+{"username":"user", "password": "user"}
+```
+Send the request, once you see response status 200, head to tab Respone/Headers and copy the token (without the Bearer prefix). 
+**Example token:** 
+eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTc0MTg2NjQ5NX0.hM2KqK6MKyrv9h-V7_T_Y3leyMsrUDrzAfaOZkz3hpg
+
+To access api endpoints, copy the token and paste to Authorization Tab (choose type Bearer Token)
 
 ## Endpoints for Books
 
