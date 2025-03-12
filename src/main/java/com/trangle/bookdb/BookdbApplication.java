@@ -10,6 +10,8 @@ import com.trangle.bookdb.domain.Book;
 import com.trangle.bookdb.domain.Category;
 import com.trangle.bookdb.domain.BookRepository;
 import com.trangle.bookdb.domain.CategoryRepository;
+import com.trangle.bookdb.domain.AppUser;
+import com.trangle.bookdb.domain.AppUserRepository;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,10 +24,12 @@ public class BookdbApplication implements CommandLineRunner {
 
 	private final BookRepository bookRepository;
 	private final CategoryRepository categoryRepository;
+	private final AppUserRepository userRepository; 
 
-	public BookdbApplication(BookRepository bookRepository, CategoryRepository categoryRepository) {
+	public BookdbApplication(BookRepository bookRepository, CategoryRepository categoryRepository, AppUserRepository userRepository) {
 		this.bookRepository = bookRepository;
 		this.categoryRepository = categoryRepository;
+		this.userRepository = userRepository; 
 	}
 	
 	public static void main(String[] args) {
@@ -58,6 +62,10 @@ public class BookdbApplication implements CommandLineRunner {
 		for (Book book : bookRepository.findAll()) {
 			logger.info(book.toString());
 		}; 
+
+		userRepository.save(new AppUser("user", "$2a$10$rons4ZzyBFDGqWPwPMlwVOwSO1aUt1axhzZHt/n5m.1.CAGmbo9Tq", "USER")); 
+		userRepository.save(new AppUser("admin","$2a$10$T48fBZgZBsMgmG0PBD8bMeSJXRV0ubYiBSL/wJX7l8GkwlqaM1XLO", "ADMIN")); 
+
 	}
 
 }
